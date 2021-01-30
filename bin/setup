@@ -5,4 +5,11 @@ set -vx
 
 bundle install
 
-# Do any other automated setup that you need to do here
+# Link the script to /usr/local/bin
+ln -si $PWD/exe/ticker /usr/local/bin
+
+# Makes the script executable
+chmod +x /usr/local/bin/ticker
+
+# Verify the command works
+ticker

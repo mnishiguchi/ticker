@@ -5,7 +5,7 @@ require "json"
 
 # Checks stock prices using Yahoo Finance API.
 # * the symbols param is required. e.g. "AAPL,MSFT,GOOG,BTC-USD"
-# * example URL: https://query1.finance.yahoo.com/v7/finance/quote?lang=en-US&region=US&corsDomain=finance.yahoo.com&symbols=SPY
+# * example URL: https://query1.finance.yahoo.com/v7/finance/quote?symbols=AMZN
 #
 # ## Examples
 #
@@ -19,6 +19,7 @@ module Ticker
   class App
     class Error < StandardError; end
 
+    # Accepts comma-separaged symbols.
     def self.query_and_format(symbols)
       format(query(symbols))
     end
@@ -43,12 +44,12 @@ module Ticker
   class QuoteApi
     class Error < StandardError; end
 
-    API_BASE_URL = "https://query1.finance.yahoo.com/v7/finance/quote"
-    API_QUERY_STRING = ->(symbols) { "lang=en-US&region=US&corsDomain=finance.yahoo.com&symbols=#{symbols}" }
-    API_ENDPOINT = ->(symbols) { URI("#{API_BASE_URL}?#{API_QUERY_STRING[symbols]}") }
+    BASE_URL = "https://query1.finance.yahoo.com/v7/finance/quote"
+    QUERY_STRING = ->(symbols) { "symbols=#{symbols}" }
+    ENDPOINT = ->(symbols) { URI("#{BASE_URL}?#{QUERY_STRING[symbols]}") }
 
     def self.call(symbols)
-      response = Net::HTTP.get_response(API_ENDPOINT[symbols])
+      response = Net::HTTP.get_response(ENDPOINT[symbols])
       if response.code == "200"
         JSON.parse(response.body).dig("quoteResponse", "result")
       else
