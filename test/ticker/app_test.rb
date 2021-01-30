@@ -13,7 +13,7 @@ module Ticker
 
     describe ".format" do
       it "returns a formatted multi-line string" do
-        assert_equal "SPY         369.33\e[31m     -0.74    (-0.20%)\e[0m *\n",
+        assert_equal "SPY       \e[1;37m  369.33\e[0m\e[31m     -0.74    (-0.20%)\e[0m *\n",
                      Ticker::App.format([["SPY", 369.33, -0.74002075, -0.19996777, "*"]])
       end
     end

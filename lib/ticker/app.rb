@@ -19,7 +19,7 @@ module Ticker
   class App
     class Error < StandardError; end
 
-    # Accepts comma-separaged symbols.
+    # Accepts comma-separated symbols.
     def self.query_and_format(symbols)
       format(query(symbols))
     end
@@ -64,17 +64,18 @@ module Ticker
   class ResultFormatter
     class Error < StandardError; end
 
-    RED = "\e[31m"
-    GREEN = "\e[32m"
-    CLEAR = "\e[0m"
+    COLOR_BOLD = "\e[1;37m"
+    COLOR_RED = "\e[31m"
+    COLOR_GREEN = "\e[32m"
+    COLOR_RESET = "\e[0m"
     FMT_SYMBOL = "%<symbol>-10s"
-    FMT_PRICE = "%<price>8.2f"
+    FMT_PRICE = "#{COLOR_BOLD}%<price>8.2f#{COLOR_RESET}"
     FMT_DIFF = "%<diff>10.2f"
     FMT_PERCENT = "(%<percent>.2f%%)"
     FMT_SIGN = "%<non_regular_market_sign>s"
 
     def self.call(symbol, price, diff, percent, non_regular_market_sign)
-      format("#{FMT_SYMBOL}#{FMT_PRICE}#{diff_color(diff)}#{FMT_DIFF}    #{FMT_PERCENT}#{CLEAR} #{FMT_SIGN}\n",
+      format("#{FMT_SYMBOL}#{FMT_PRICE}#{diff_color(diff)}#{FMT_DIFF}    #{FMT_PERCENT}#{COLOR_RESET} #{FMT_SIGN}\n",
              symbol: symbol,
              price: price,
              diff: diff,
@@ -87,7 +88,7 @@ module Ticker
     def self.diff_color(diff)
       return "" if diff.zero?
 
-      diff.negative? ? RED : GREEN
+      diff.negative? ? COLOR_RED : COLOR_GREEN
     end
   end
 
