@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     ticker (0.1.0)
+      thor
 
 GEM
   remote: https://rubygems.org/
@@ -27,6 +28,7 @@ GEM
     rubocop-ast (1.4.1)
       parser (>= 2.7.1.5)
     ruby-progressbar (1.11.0)
+    thor (1.1.0)
     unicode-display_width (1.7.0)
 
 PLATFORMS
