@@ -68,19 +68,15 @@ module Ticker
     COLOR_RED = "\e[31m"
     COLOR_GREEN = "\e[32m"
     COLOR_RESET = "\e[0m"
-    FMT_SYMBOL = "%<symbol>-10s"
-    FMT_PRICE = "#{COLOR_BOLD}%<price>8.2f#{COLOR_RESET}"
-    FMT_DIFF = "%<diff>10.2f"
-    FMT_PERCENT = "(%<percent>.2f%%)"
-    FMT_SIGN = "%<non_regular_market_sign>s"
 
     def self.call(symbol, price, diff, percent, non_regular_market_sign)
-      format("#{FMT_SYMBOL}#{FMT_PRICE}#{diff_color(diff)}#{FMT_DIFF}    #{FMT_PERCENT}#{COLOR_RESET} #{FMT_SIGN}\n",
-             symbol: symbol,
-             price: price,
-             diff: diff,
-             percent: percent,
-             non_regular_market_sign: non_regular_market_sign)
+      [
+        symbol.ljust(10),
+        format("#{COLOR_BOLD}%<price>8.2f#{COLOR_RESET}", price: price),
+        format("#{diff_color(diff)}%<diff>10.2f", diff: diff),
+        format("(%<percent>.2f%%)", percent: percent).rjust(12),
+        "#{COLOR_RESET} #{non_regular_market_sign}\n"
+      ].join("")
     rescue StandardError => e
       raise Error, e.message
     end
