@@ -1,8 +1,10 @@
 # Ticker
 
+![CI](https://github.com/mnishiguchi/ticker/workflows/CI/badge.svg)
+
 Check stock prices in a terminal. The data is fetched from [Yahoo Finance API](https://query1.finance.yahoo.com/v7/finance/quote?symbols=AMZN).
 
-## Usage
+## Get started
 
 Clone the project
 
@@ -16,7 +18,9 @@ And then set up the command
 
     $ bin/setup
 
-Get the stock prices of Amazon and Apple by specifying ticker sybmols to the `ticker q` command
+## Usage
+
+As an example, you can get the stock prices of Amazon and Apple, specifying to the `ticker q` command the ticker sybmols separated by space or comma
 
     $ ticker q AMZN,AAPL
     $ ticker q AMZN AAPL
